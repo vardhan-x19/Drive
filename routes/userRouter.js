@@ -66,9 +66,14 @@ routes.post('/login',
           message:'the data is not found'
         })
       }
-      res.json({
-        message:'the data is avlbl'
-      })
+      const token=jwt.sign({
+        id:data._id,
+        userName:data.username,
+        email:data.email,
+      },process.env.JWT_SECRETE_KEY)
+
+      res.cookie('token',token)
+      res.send('Login Done')
    }
    else{
     res.json({
